@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project HYDRA: Neural Schrödinger Solver</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Teal Accent -->
+    <!-- Application Structure Plan: A single-page, scrollable research proposal. The structure flows from high-level vision to detailed research phases, a comparative analysis, and a project timeline. This linear, section-based approach is chosen to clearly and logically present the synthesized research plan, making it easy for a reader (like a grant reviewer or VC) to follow the argument from concept to execution. Key interactions include tabbed sections for research details and an interactive comparison chart to highlight the core value proposition (speed vs. accuracy). -->
+    <!-- Visualization & Content Choices: 1. Research Phases: Organized using interactive HTML/CSS tabs. Goal: Organize. Method: Clickable tabs reveal detailed text. Justification: Prevents information overload, allowing users to focus on one phase at a time. 2. Methodology Comparison: Goal: Compare. Viz: Interactive Bar Chart (Chart.js/Canvas). Interaction: Tooltips on hover provide qualitative metrics. Justification: Provides a quick, clear visual summary of the key trade-offs between old and new methods. 3. Project Timeline: Goal: Organize/Change over time. Viz: HTML/CSS Flexbox-based visual timeline. Interaction: Hovering over a phase highlights its bar. Justification: Gives a clear overview of the project's planned progression. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f4;
+            color: #333;
+        }
+        .tab-active {
+            background-color: #0d9488;
+            color: #ffffff;
+            border-color: #0d9488;
+        }
+        .tab-inactive {
+            background-color: #ffffff;
+            color: #374151;
+            border-color: #d1d5db;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        .timeline-item:hover .timeline-bar {
+             transform: scaleY(1.1);
+             background-color: #14b8a6;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-teal-700 tracking-tight">Project HYDRA</h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">A Research Program to Develop a Neural-Network-Based Schrödinger Equation Solver for Accelerated Protein Engineering</p>
+        </header>
+
+        <main>
+            <section id="vision" class="mb-20 bg-white p-8 rounded-xl shadow-sm">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-4 text-center">Core Hypothesis</h2>
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="text-5xl text-teal-500 flex-shrink-0">🔬</div>
+                    <div class="text-gray-700 text-base leading-relaxed">
+                        <p>Current quantum chemistry methods, while accurate, are computationally prohibitive for the large-scale screening required in modern protein engineering. We hypothesize that by adapting neural network techniques, proven successful in approximating complex physical systems like fluid dynamics, we can create a surrogate model for the Schrödinger equation. This model will not seek perfect solutions, but rather "good enough" approximations of molecular orbitals in protein active sites, enabling rapid prediction of catalytic rates and selectivity. The core trade-off is sacrificing absolute precision for a massive gain in computational speed, unlocking new possibilities in enzyme design and discovery.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="research-plan" class="mb-20">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center">Key Research Thrusts</h2>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div id="tabs-container" class="flex flex-wrap justify-center gap-2 mb-6">
+                        <button data-tab="phase1" class="tab-button tab-active text-sm sm:text-base font-medium py-2 px-4 rounded-full border transition-all duration-300">Phase 1: Data Generation</button>
+                        <button data-tab="phase2" class="tab-button tab-inactive text-sm sm:text-base font-medium py-2 px-4 rounded-full border transition-all duration-300">Phase 2: Model Architecture</button>
+                        <button data-tab="phase3" class="tab-button tab-inactive text-sm sm:text-base font-medium py-2 px-4 rounded-full border transition-all duration-300">Phase 3: Training & Validation</button>
+                        <button data-tab="phase4" class="tab-button tab-inactive text-sm sm:text-base font-medium py-2 px-4 rounded-full border transition-all duration-300">Phase 4: Application</button>
+                    </div>
+
+                    <div id="tabs-content" class="bg-white p-6 sm:p-8 rounded-xl shadow-sm min-h-[300px]">
+                        <div id="phase1" class="tab-content">
+                            <h3 class="text-2xl font-semibold text-teal-700 mb-3">Phase 1: Data Generation & Curation</h3>
+                            <p class="text-gray-600 mb-4">The foundation of this project is a high-quality dataset. We will generate a large library of "ground truth" solutions for protein active sites using established, albeit slow, quantum chemistry methods like Density Functional Theory (DFT).</p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li><strong>Objective:</strong> Create a diverse dataset mapping protein active site geometries to their corresponding electron density and molecular orbital configurations.</li>
+                                <li><strong>Methodology:</strong> Automate DFT calculations across a curated set of known enzymes and their transition states. The inputs will be atomic coordinates, and the outputs will be the calculated wavefunctions represented on a 3D grid.</li>
+                                <li><strong>Key Challenge:</strong> Ensuring chemical diversity in the dataset while managing the immense computational cost of ground truth generation.</li>
+                            </ul>
+                        </div>
+                        <div id="phase2" class="tab-content hidden">
+                            <h3 class="text-2xl font-semibold text-teal-700 mb-3">Phase 2: Model Architecture Exploration</h3>
+                            <p class="text-gray-600 mb-4">Inspired by successes in physics-informed neural networks and fields like fluid dynamics simulation, we will explore architectures capable of learning the complex, 3D relationships of quantum mechanics.</p>
+                             <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li><strong>Objective:</strong> Develop a neural network architecture that can efficiently learn the mapping from atomic positions to electron wavefunctions.</li>
+                                <li><strong>Methodology:</strong> Investigate architectures such as 3D Convolutional Neural Networks (3D-CNNs), Graph Neural Networks (GNNs) to represent molecular structure, and Fourier Neural Operators that excel in solving PDEs. We may explore hybrid approaches, potentially incorporating wavelets as a basis, to capture multi-scale phenomena.</li>
+                                <li><strong>Key Challenge:</strong> Designing a model that respects fundamental physical symmetries (like rotational invariance) and can generalize to unseen molecular geometries.</li>
+                            </ul>
+                        </div>
+                        <div id="phase3" class="tab-content hidden">
+                            <h3 class="text-2xl font-semibold text-teal-700 mb-3">Phase 3: Training & Validation</h3>
+                            <p class="text-gray-600 mb-4">This phase focuses on training the model to predict quantum states and rigorously validating its performance against both the ground truth data and experimental observations.</p>
+                             <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li><strong>Objective:</strong> Train the selected model to minimize the difference between its predictions and the DFT-calculated wavefunctions.</li>
+                                <li><strong>Methodology:</strong> Utilize the generated dataset for training. The loss function will directly compare the predicted and true electron densities. Validation will involve a held-out test set and, crucially, comparing model-derived properties (like reaction energy barriers) with experimentally known values for a set of benchmark enzymes.</li>
+                                <li><strong>Key Challenge:</strong> Avoiding overfitting and ensuring the model learns the underlying physics rather than just memorizing the training data. Developing meaningful metrics for "good enough" accuracy.</li>
+                            </ul>
+                        </div>
+                        <div id="phase4" class="tab-content hidden">
+                            <h3 class="text-2xl font-semibold text-teal-700 mb-3">Phase 4: Application & Refinement</h3>
+                            <p class="text-gray-600 mb-4">The ultimate test is the solver's utility in a real-world protein engineering workflow. We will integrate the trained model into a high-throughput screening pipeline.</p>
+                             <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li><strong>Objective:</strong> Use the neural solver to rapidly screen thousands of protein variants for desired catalytic properties (e.g., enhanced rate, altered selectivity).</li>
+                                <li><strong>Methodology:</strong> Develop a pipeline that takes a protein structure, introduces mutations in silico, and uses the neural solver to predict the impact on the active site's electronic structure and resulting catalytic activity. Promising candidates will be flagged for further experimental validation.</li>
+                                <li><strong>Key Challenge:</strong> Bridging the gap between predicted electronic properties and macroscopic catalytic function, and creating an intuitive tool for biochemists.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="comparison" class="mb-20">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-2 text-center">Methodology Comparison</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">This chart illustrates the strategic trade-off at the heart of Project HYDRA: prioritizing speed and throughput to unlock new screening capabilities.</p>
+                <div class="chart-container">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </section>
+            
+            <section id="timeline" class="mb-16">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center">Project Timeline</h2>
+                <div class="w-full max-w-5xl mx-auto bg-white p-8 rounded-xl shadow-sm">
+                    <div class="flex flex-col md:flex-row justify-between text-center">
+                        <div class="timeline-item flex-1 p-2">
+                            <h4 class="font-semibold text-gray-700">Phase 1</h4>
+                            <div class="h-40 flex items-end justify-center p-2">
+                                <div class="timeline-bar w-1/2 bg-gray-200 rounded-t-lg transition-all duration-300" style="height: 60%;"></div>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2">Months 1-9</p>
+                        </div>
+                        <div class="timeline-item flex-1 p-2">
+                            <h4 class="font-semibold text-gray-700">Phase 2</h4>
+                            <div class="h-40 flex items-end justify-center p-2">
+                                <div class="timeline-bar w-1/2 bg-gray-200 rounded-t-lg transition-all duration-300" style="height: 80%;"></div>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2">Months 6-15</p>
+                        </div>
+                        <div class="timeline-item flex-1 p-2">
+                            <h4 class="font-semibold text-gray-700">Phase 3</h4>
+                            <div class="h-40 flex items-end justify-center p-2">
+                                <div class="timeline-bar w-1/2 bg-gray-200 rounded-t-lg transition-all duration-300" style="height: 100%;"></div>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2">Months 12-24</p>
+                        </div>
+                        <div class="timeline-item flex-1 p-2">
+                            <h4 class="font-semibold text-gray-700">Phase 4</h4>
+                            <div class="h-40 flex items-end justify-center p-2">
+                                <div class="timeline-bar w-1/2 bg-gray-200 rounded-t-lg transition-all duration-300" style="height: 90%;"></div>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2">Months 20-36</p>
+                        </div>
+                    </div>
+                     <div class="mt-4 text-center text-xs text-gray-500">Bar height indicates relative effort/resource allocation during that period.</div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center pt-8 mt-12 border-t border-gray-200">
+            <p class="text-sm text-gray-500">&copy; 2025 Project HYDRA Initiative. A conceptual framework.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-tab');
+
+                    tabs.forEach(t => {
+                        t.classList.remove('tab-active');
+                        t.classList.add('tab-inactive');
+                    });
+                    tab.classList.remove('tab-inactive');
+                    tab.classList.add('tab-active');
+
+                    contents.forEach(content => {
+                        if (content.id === target) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            const comparisonChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Computational Cost', 'Prediction Speed', 'Absolute Accuracy', 'Screening Throughput'],
+                    datasets: [{
+                        label: 'Traditional Methods (e.g., DFT)',
+                        data: [95, 10, 90, 5],
+                        backgroundColor: 'rgba(15, 118, 110, 0.6)',
+                        borderColor: 'rgba(15, 118, 110, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Project HYDRA (Neural Solver)',
+                        data: [20, 95, 65, 98],
+                        backgroundColor: 'rgba(20, 184, 166, 0.6)',
+                        borderColor: 'rgba(20, 184, 166, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                             ticks: {
+                                callback: function(value) {
+                                    return value + '%'
+                                }
+                            }
+                        },
+                        y: {
+                           grid: {
+                                display: false
+                           }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Relative Performance Profile (Conceptual)',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        tooltip: {
+                           callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.x !== null) {
+                                       const value = context.parsed.x;
+                                       const category = context.label;
+                                       let descriptor = "";
+                                       if(category === 'Computational Cost') descriptor = value > 50 ? "Very High" : "Low";
+                                       if(category === 'Prediction Speed') descriptor = value > 50 ? "Very Fast" : "Slow";
+                                       if(category === 'Absolute Accuracy') descriptor = value > 80 ? "High Fidelity" : "Approximate";
+                                       if(category === 'Screening Throughput') descriptor = value > 50 ? "High" : "Low";
+                                       label += descriptor;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
